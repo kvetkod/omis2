@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Материал по курсу{% endblock %}
+
+{% block content %}
+<h2 style="text-align: center;">{{ material.title }}</h2>
+<p>{{ material.content }}</p>
+{% if material.video_url %}
+    <p>Ознакомиться с материалом вы можете по ссылке {{ material.video_url }}</p>
+{% endif %}
+{% endblock %}

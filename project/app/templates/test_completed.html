@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}{{ test.title }}{% endblock %}
+
+{% block content %}
+<h1 style="text-align: center;"> {{ test.title }}<h1>
+{% for question in questions %}
+<h2>Задание: {{ question.question_text }}</h2>
+<h3>Верный ответ: {{ question.correct_answer }}</h3>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}{{ test.title }}{% endblock %}
+
+{% block content %}
+<h3>Оценка за тест: {{ total_score }}/{{ test.max_score }}</h3>
+
+{% if user_course.status == "completed" %}
+    <a href="{% url 'course_completed' course_id=test.course.id %}" class="btn btn-primary">
+        Просмотреть сертификат
+    </a>
+{% else %}
+    <a href="{% url 'active_courses' %}" class="btn btn-secondary">
+        Вернуться к курсам
+    </a>
+{% endif %}
+{% endblock %}

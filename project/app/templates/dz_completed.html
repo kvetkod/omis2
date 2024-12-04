@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}{{ homework.title }}{% endblock %}
+
+{% block content %}
+<h1 style="text-align: center;">{{ homework.title }}</h1>
+<h3>Задание: {{ homework.description }}</h3>
+<p>Попыток: {{ obj.attempts }}</p>
+{% if obj.score %}
+<p>Текущая оценка: {{ obj.score }}</p>
+{% endif %}
+<p>Правильный ответ: {{ homework.answer }}</p>
+
+<div style="margin-top: 20px;">
+    {% if user_course.status == "completed" %}
+    <a href="{% url 'course_completed' course_id=homework.course.id %}" class="btn btn-primary">Просмотреть сертификат</a>
+    {% else %}
+    <a href="{% url 'course_detail' pk=homework.course.id %}" class="btn btn-secondary">Вернуться к курсу</a>
+    {% endif %}
+</div>
+{% endblock %}

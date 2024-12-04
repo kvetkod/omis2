@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}{{ homework.title }}{% endblock %}
+
+{% block content %}
+<h1 style="text-align: center;">{{ homework.title }}</h1>
+<h3>Задание: {{ homework.description }}</h3>
+<p>Попыток: {{ obj.attempts }}</p>
+{% if obj.score %}
+<p>Текущая оценка: {{ obj.score }}</p>
+{% endif %}
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Выполнить</button>
+</form>
+{% endblock %}

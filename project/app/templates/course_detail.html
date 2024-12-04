@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{{ course.name }}{% endblock %}
+
+{% block content %}
+<ul style="list-style-type: none; padding: 0;">
+    <li style=" margin: 10px 0; display: flex; padding: 20px; ">
+        {% if course.image %}
+        <img src="{{ course.image.url }}" alt="{{ course.name }}" style="max-width: 300px; margin-right: 10px;">
+        {% endif %}
+        <div style="flex-grow: 1; display: flex; flex-direction: column;">
+            <h1>Курс "{{ course.name }}"</h1>
+            <p>Предмет: {{ course.subject }}</p>
+            <p>О курсе: {{ course.info }}</p>
+        </div>
+    </li>
+</ul>
+
+{% if user_course.status == "completed" %}
+    <h2>Курс завершён!</h2>
+    <p>Вы можете просмотреть сертификат и результаты курса.</p>
+    <a href="{% url 'course_completed' course_id=course.id %}" class="btn btn-primary">Просмотреть сертификат</a>
+{% else %}
+    <h2>Материалы</h2>
+    <ul style="list-style-type: none; padding: 0;">
+        {% for material in materials %}
+        <li style=" margin: 10px 0; display: flex; ">
+            <a href="{% url 'material' pk=material.pk%}">{{ material.title }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+    <h2>Домашние задания</h2>
+    <ul style="list-style-type: none; padding: 0;">
+        {% for task in tasks %}
+        <li style=" margin: 10px 0; display: flex; ">
+            <a href="{% url 'homework' pk=task.pk %}">{{ task.title }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <h2>Тест</h2>
+    <ul style="list-style-type: none; padding: 0;">
+        {% for test in tests %}
+        <li style=" margin: 10px 0; display: flex; ">
+            <a href="{% url 'test' test_id=test.pk question_number=1 %}">{{ test.title }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+{% endif %}
+{% endblock %}

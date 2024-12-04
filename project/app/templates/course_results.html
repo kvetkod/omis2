@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load custom_tags static %}
+{% block title %}Результаты курса {{ course.name }}{% endblock %}
+
+{% block content %}
+<!-- Отображение изображения курса в начале -->
+{% if course.image %}
+    <div style="text-align: left; margin-bottom: 20px;">
+        <img src="{{ course.image.url }}" alt="{{ course.name }}" style="max-width: 300px;">
+    </div>
+{% endif %}
+
+<h2>Результаты курса "{{ course.name }}"</h2>
+<p>Предмет: {{ course.subject }}</p>
+<p>Общая оценка: {{ user_course.grade|floatformat:2 }}/10</p>
+
+<h3>Домашние задания:</h3>
+<ul>
+    {% for homework in course.homeworks.all %}
+    <li>
+        {{ homework.title }} -
+        {% if homework.id in homework_submissions %}
+            Оценка: {{ homework_submissions|dict_get:homework.id|attr:"score" }}/{{ homework.max_score }}
+        {% else %}
+            Нет оценки.
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>
+
+<h3>Тесты:</h3>
+<ul>
+    {% for test in course.tests.all %}
+    <li>
+        {{ test.title }} -
+        {% if test.id in test_attempts %}
+            Оценка: {{ test_attempts|dict_get:test.id|attr:"score" }}/{{ test.max_score }}
+        {% else %}
+            Нет оценки.
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>
+
+<!-- Отображение сертификата в конце страницы -->
+<div style="text-align: left; margin-top: 20px;">
+    <img src="{% static 'wow.png' %}" alt="Сертификат" style="max-width: 700px;">
+</div>
+
+{% endblock %}

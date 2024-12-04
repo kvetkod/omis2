@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static custom_tags %}
+{% block title %}Поиск{% endblock %}
+
+{% block content %}
+<h1 style="text-align: center;">Введите имя или предмет курса</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Найти</button>
+</form>
+
+<ul style="list-style-type: none; padding: 0;">
+    {% if courses %}
+        {% for course in courses %}
+        <li style="border: 1px solid #ccc; border-radius: 5px; margin: 10px 0; display: flex; padding: 10px; align-items: center; position: relative;">
+            {% if course.image %}
+            <img src="{{ course.image.url }}" alt="{{ course.name }}" style="max-width: 100px; margin-right: 10px;">
+            {% endif %}
+            <div style="flex-grow: 1; display: flex; flex-direction: column;">
+                <h3>{{ course.name }}</h3>
+                <p>Предмет: {{ course.subject }}</p>
+            </div>
+            <!-- Проверяем, добавлен ли курс в активные -->
+            {% if course.id not in active_course_ids %}
+                <a href="{% url 'add_course' course_id=course.pk %}" class="btn btn-primary" style="position: absolute; bottom: 10px; right: 10px;">Добавить</a>
+            {% endif %}
+        </li>
+        {% endfor %}
+    {% else %}
+        <p style="text-align: center;">Нет результатов</p>
+    {% endif %}
+</ul>
+{% endblock %}

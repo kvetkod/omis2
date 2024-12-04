@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Главная страница{% endblock %}
+
+{% block content %}
+<style>
+    h2 {
+        position: relative; /* Позволяет задавать смещение */
+        top: 70px; /* Расстояние от верхней части страницы */
+        text-align: center; /* Горизонтальное выравнивание */
+    }
+
+    .button-container {
+        position: relative;
+        top: 150px; /* Отодвигает кнопки вниз */
+        display: flex;
+        justify-content: center; /* Центрирует кнопки */
+        gap: 500px; /* Увеличивает расстояние между кнопками */
+    }
+
+    .button-container a {
+        width: 200px; /* Фиксированная ширина кнопок */
+    }
+</style>
+
+<h2>Добро пожаловать, </h2>    
+<h2>{{ user.username }}</h2>
+
+<div class="button-container">
+    <div class="pricing-header p-3 pb-md-4 text-center">
+        <!-- Ссылка для открытия модального окна -->
+        <a href="{% url 'active_courses' %}" class="btn btn-lg btn-primary">
+            Активные материалы
+        </a>
+    </div>
+    <div class="pricing-header p-3 pb-md-4 text-center">
+        <!-- Ссылка для открытия модального окна -->
+        <a href="{% url 'completed_courses' %}" class="btn btn-lg btn-primary">
+            Пройденные материалы
+        </a>
+    </div>
+</div>
+{% endblock %}

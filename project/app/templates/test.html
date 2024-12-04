@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}{{ test.title }}{% endblock %}
+
+{% block content %}
+<h1 style="text-align: center;">Вопрос {{ question_number }} из {{ total_questions }}</h1>
+<h3>Задание: {{ question.question_text }}</h3>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Ответить</button>
+</form>
+
+<div class="button-container" style="display: flex; justify-content: space-between; margin-top: 20px;">
+    {% if prev_question %}
+    <a href="{% url 'test' test_id=test.pk question_number=prev_question %}" class="btn btn-secondary">
+        Предыдущий вопрос
+    </a>
+    {% endif %}
+    {% if next_question %}
+    <a href="{% url 'test' test_id=test.pk question_number=next_question %}" class="btn btn-secondary">
+        Следующий вопрос
+    </a>
+    {% else %}
+    <a href="{% url 'end_test' pk=test.pk %}" class="btn btn-success">
+        Закончить тест
+    </a>
+    {% endif %}
+</div>
+{% endblock %}

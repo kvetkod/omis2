@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Поздравляем с прохождением курса{% endblock %}
+
+
+{% block content %}
+<h2 style="text-align: center;">Поздравляем с прохождением курса "{{ course.name }}"!</h2>
+<p style="text-align: center;">Вы успешно завершили все задания и тесты.</p>
+<div style="text-align: center;">
+    <img src="{% static 'wow.png' %}" alt="Сертификат" style="max-width: 700px; margin: 20px 0;">
+</div>
+<div style="text-align: center; margin-top: 20px;">
+    <a href="{% url 'active_courses' %}" class="btn btn-primary">Вернуться к активным материалам</a>
+</div>
+{% endblock %}
